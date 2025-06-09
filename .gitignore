@@ -1,0 +1,35 @@
+# CMake build directories
+/build/
+/CMakeFiles/
+/CMakeCache.txt
+/cmake_install.cmake
+/Makefile
+/install_manifest.txt
+
+# Output directories
+/bin/
+/lib/
+
+# Compiled object files and executables
+*.o
+*.obj
+*.so
+*.a
+*.exe
+*.dll
+*.out
+
+# Editor/IDE files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+.DS_Store
+
+# Generated packages
+*.zip
+*.tar.gz
+
+# Logs
+*.log
