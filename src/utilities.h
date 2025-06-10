@@ -10,6 +10,7 @@ namespace Utils
     constexpr SDL_Color PIXEL_COLOR_ON = {255, 255, 255, 255}; // white
     constexpr SDL_Color PIXEL_COLOR_OFF = {0, 0, 0, 255};      // black
     
+    
     constexpr int PIXEL_WIDTH = 64;     // width of window in logical pixels
     constexpr int PIXEL_HEIGHT = 32;    // height of window in logical pixels
     constexpr int DISPLAY_SCALE = 10;   // scale of logical pixels to screen pixels
@@ -25,6 +26,5 @@ namespace Utils
 
     // Constants for timing
     constexpr uint32_t CPU_HZ = 700;
-    constexpr uint32_t DISPLAY_HZ = 60;
-    
+    constexpr uint32_t DISPLAY_HZ = 60;    
 }

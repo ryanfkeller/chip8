@@ -4,6 +4,7 @@
 
 #include <SDL2/SDL.h>
 #include <stdexcept>
+#include <format>
 
 Display::Display() {
     sdl_init();
@@ -31,11 +32,19 @@ void Display::render() {
 }
 
 void Display::set_pixel(int x, int y, bool on) {
-    if (x < 0 || x >= Utils::PIXEL_WIDTH || y < 0 || y >= Utils::PIXEL_HEIGHT) return;
+    if (x < 0 || x >= Utils::PIXEL_WIDTH || y < 0 || y >= Utils::PIXEL_HEIGHT) 
+        return;
     buffer_[y * Utils::PIXEL_WIDTH + x] = on ? 1 : 0;
 }
 
-const std::array<uint8_t, Utils::PIXEL_WIDTH * Utils::PIXEL_HEIGHT>& Display::get_buffer() const {
+bool Display::check_pixel(int x, int y) {
+    if (x < 0 || x >= Utils::PIXEL_WIDTH || y < 0 || y >= Utils::PIXEL_HEIGHT) {
+        throw std::runtime_error(std::format("Invalid pixel check (x:{:}, y:{:}", x, y));
+    }
+    return buffer_[y * Utils::PIXEL_WIDTH + x];
+}
+
+const std::array<bool, Utils::PIXEL_WIDTH * Utils::PIXEL_HEIGHT>& Display::get_buffer() const {
     return buffer_;
 }
 

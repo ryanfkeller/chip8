@@ -12,13 +12,14 @@ public:
     void clear();
     void render();
     void set_pixel(int x, int y, bool on);
+    bool check_pixel(int x, int y);
 
-    const std::array<uint8_t, Utils::PIXEL_WIDTH * Utils::PIXEL_HEIGHT>& get_buffer() const;
+    const std::array<bool, Utils::PIXEL_WIDTH * Utils::PIXEL_HEIGHT>& get_buffer() const;
 
 private:
     SDL_Window* window_ = nullptr;
     SDL_Renderer* renderer_ = nullptr;
-    std::array<uint8_t, Utils::PIXEL_WIDTH * Utils::PIXEL_HEIGHT> buffer_; // 0 or 1 per pixel
+    std::array<bool, Utils::PIXEL_WIDTH * Utils::PIXEL_HEIGHT> buffer_; // 0 or 1 per pixel
 
     void draw_buffer();
     void sdl_init();

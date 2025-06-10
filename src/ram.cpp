@@ -1,5 +1,6 @@
 #include "ram.h"
 #include "utilities.h"
+#include "debug.h"
 #include <array>
 #include <stdexcept>
 #include <fstream>
@@ -43,6 +44,8 @@ void RAM::load_file(const std::string& filename, uint16_t address) {
     {
         throw std::runtime_error("Failed to read file: " + filename);
     }
+
+    PRINT_DEBUG("wrote something\n");
 }
 
 void RAM::mem_dump(uint16_t address, uint16_t length) const
