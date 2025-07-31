@@ -1,34 +1,43 @@
 cmake_minimum_required(VERSION 3.10)
 project(chip8)
-enable_language(CXX)
-set(CMAKE_CXX_STANDARD 20)
+
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic")
+
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+
 find_package(SDL2 REQUIRED)
+
 add_executable(chip8
-    src/cpu.h
     src/cpu.cpp
-    src/debug.h
     src/display.cpp
-    src/display.h
     src/emulator.cpp
-    src/emulator.h
     src/main.cpp
-    src/ram.h
     src/ram.cpp
-    src/utilities.h
+    src/sdl_manager.cpp
+    src/sound.cpp
+    src/timer.cpp
 )
-target_include_directories(chip8 PRIVATE ${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_MIXER_INCLUDE_DIRS})
-target_link_libraries(chip8 ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_MIXER_LIBRARIES})
-if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+
+target_include_directories(chip8 PRIVATE
+    src/
+    ${SDL2_INCLUDE_DIRS}
+)
+
+target_compile_options(chip8 PRIVATE -Wall -Wextra -pedantic)
+target_link_libraries(chip8 PRIVATE ${SDL2_LIBRARIES})
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_definitions(chip8 PRIVATE DEBUG)
+    target_compile_options(chip8 PRIVATE -g -O0)
 else()
     target_compile_definitions(chip8 PRIVATE NDEBUG)
+    target_compile_options(chip8 PRIVATE -O2)
 endif()
+
 # Install rules
 install(TARGETS chip8
     RUNTIME DESTINATION bin

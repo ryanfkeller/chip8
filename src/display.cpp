@@ -1,17 +1,14 @@
 #include "display.h"
-
+#include "sdl_manager.h"
 #include "utilities.h"
 
 #include <SDL2/SDL.h>
 #include <stdexcept>
 #include <format>
 
-Display::Display() {
-    sdl_init();
+Display::Display(SDL_Manager& sdl_manager) 
+    : renderer_(sdl_manager.get_renderer()) {
     clear();
-}
-Display::~Display() {
-    sdl_cleanup();
 }
 
 void Display::clear() {
@@ -77,43 +74,4 @@ void Display::draw_buffer() {
             }
         }
     } 
-}
-
-void Display::sdl_init() {
-
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        throw std::runtime_error("Failed to initialize SDL video");
-    }
-
-    window_ = SDL_CreateWindow(
-        Utils::WINDOW_TITLE,
-        SDL_WINDOWPOS_UNDEFINED,
-        SDL_WINDOWPOS_UNDEFINED,
-        Utils::WINDOW_WIDTH,
-        Utils::WINDOW_HEIGHT,
-        SDL_WINDOW_SHOWN);
-
-    if (!window_) {
-        throw std::runtime_error("Failed to create SDL window");
-    }
-
-    renderer_ = SDL_CreateRenderer(window_, -1, SDL_RENDERER_ACCELERATED);
-    if (!renderer_) {
-        throw std::runtime_error("Failed to create SDL renderer");
-    }
-}
-
-void Display::sdl_cleanup() {
-
-    if (renderer_) {
-        SDL_DestroyRenderer(renderer_);
-        renderer_ = nullptr;
-    }
-
-    if (window_) {
-        SDL_DestroyWindow(window_);
-        window_ = nullptr;
-    }
-
-    SDL_Quit();
 }
